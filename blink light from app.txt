@@ -1,0 +1,45 @@
+#include<ESP8266WiFi.h>
+#include <Adafruit_NeoPixel.h>//this library is used to work with functionalities of NeoPixel ring
+
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(10,12,NEO_GRB+NEO_KHZ800);//to make it global
+#define BLYNK_PRINT Serial
+#include<BlynkSimpleEsp8266.h>
+char auth[]="b90fdce0e81d432babc27f8c652f2dda";
+char ssid[]="kavya";
+char pass[]="kavya1999";
+void setup() {
+  // put your setup code here, to run once:
+Serial.begin(115200);
+strip.begin();
+Blynk.begin(auth,ssid,pass);
+}
+BLYNK_WRITE(V1)
+{
+  int received=param.asInt();
+  Serial.print("received value=");
+  Serial.println(received);
+  if(received==1)
+  {
+    red();
+  }
+  else
+  {
+    off();
+  }
+}
+void red() {
+    for(uint16_t i=0;i<10;i++){
+    strip.setPixelColor(i,strip.Color(random(0,255),random(0,255),random(0,255)));
+  }
+  strip.show();
+  }
+  void off() {
+    for(uint16_t i=0;i<10;i++){
+    strip.setPixelColor(i,strip.Color(0,0,0));
+  }
+  strip.show();
+  }
+void loop() {
+  // put your main code here, to run repeatedly:
+ Blynk.run();
+}

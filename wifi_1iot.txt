@@ -1,0 +1,17 @@
+#include<ESP8266WiFi.h>
+void setup()
+{
+Serial.begin(115200);
+WiFi.begin("kavya","kavya1999");
+while(WiFi.status()!=WL_CONNECTED)
+{
+  delay(600);
+  Serial.println(".");
+}
+Serial.print("IP ADRESS:");
+Serial.println(WiFi.localIP());
+}
+void loop()
+{
+  
+}
